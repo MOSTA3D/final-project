@@ -1,0 +1,51 @@
+main.cam-grid{
+  margin-top: $nav-height;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+  
+    margin-bottom: 50px;
+
+    >div{
+      // background-color: rgba(19, 41, 139, 0.342);
+      // min-height: 300px;
+      display: grid;
+
+      &.loading{
+        background-color: rgba(0, 0, 0, 0.212);
+      }
+    }
+    >div::before{
+      content:"";
+      padding-bottom: 56.25%;
+      display: block;
+    }
+    >div::before,
+    >div span{
+      grid-area: 1/1/2/2;
+    }
+    >div span{
+      position: relative;
+
+      // nesting
+      video{
+        width: 100%;
+        height: 100%;
+      }
+      div.video-wrapper{
+        position: absolute;
+        top: 0;left:0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://cdn.wallpapersafari.com/76/79/aX83UN.jpg");
+        background-size: cover;
+        transition: $dtrans;
+        cursor: pointer;
+        &:hover{
+          opacity: 0;
+        }
+      }
+    }
+  }
+  

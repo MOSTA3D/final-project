@@ -1,0 +1,159 @@
+// global variables
+
+.camera{
+    $camera-height: calc(100vh - 110px);
+
+    position: relative;
+    min-height: $camera-height;
+    margin: $nav-height 0 $footer-height;
+    @include flex-box(true, flex-start);
+    z-index: 1;
+    // grid-template-areas:
+    //     "m m m m s"
+    //     "m m m m s"
+    //     "f f f f f"
+    //     ;
+    //nesting
+
+    main.camera-main{
+      min-height: $camera-height;
+      flex: 1;
+      display: grid;
+      grid-template-rows: minmax(auto, 380px) auto;
+      grid-template-columns: 1fr 280px ;
+      background-color: #04131a;
+  
+      //nesting
+      main{
+        background-color: #000;
+        @include   flex-box(false, center);
+        margin-left: 10px;
+
+        //nesting
+        video{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      aside{
+      }
+      footer{
+        @include flex-box;
+        grid-area: 2/1/3/3;
+    
+        // nesting
+        >div{
+          flex: 2;
+          height: 100%;
+          padding: 10px;
+    
+          //nesting
+    
+          ul{
+            font-size: 10pt;
+          }
+        }
+    
+        >div.controller{
+          flex: 1;
+          text-align: center;
+          
+          //nesting
+          button{
+            margin-top: 40px;
+            width: 150px;
+            height: 40px;
+            background-color: rgb(255, 34, 0);
+            color: #fff;
+            font-size: 12pt;
+            font-weight: bold;
+            transition: $dtrans;
+            opacity: 0.5;
+  
+            &:hover{
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      @media only screen and (max-width: 600px){
+        &{
+          grid-template-rows: 250px 120px auto;
+          grid-template-columns: 1fr;
+          
+          padding: 0;
+        }
+
+        footer{
+          grid-area:auto;
+          min-height: 200px;
+        }
+      }
+    }
+    >aside{
+      $aside-color: #092938;
+      $aside-width: 270px;
+      width: $aside-width;
+      background-color: $aside-color;
+      transition: $menu-trans;
+
+      &.open{
+        right: 0;
+      }
+
+      .slide-icon{
+        position: absolute;
+        right: $aside-width;top: 30px;
+        display: none;
+        padding: 5px 10px;
+        height: 36px;
+        width: 39px;
+        background-color: $aside-color;
+        border-radius: 50% 0 0 50%;
+        font-size: 1.2em;
+        cursor: pointer;
+
+        &:hover{
+          color: $primary-hover-color;
+        }
+      }
+
+      ul{
+        height:$camera-height;
+        overflow: auto;
+        padding-top: 20px;
+        
+      }
+
+      ul li{
+        height: 50px;
+        width: 100%;
+        margin-bottom: 10px;
+        @include flex-box;
+        // background-color: rgba(9, 52, 57, 0.808);
+        padding: 15px 22px;
+        transition: $dtrans;
+        cursor: pointer;
+
+        &.active{
+          background-color: #eee;
+          color: $primary-hover-color;
+        }
+
+        &:hover{
+          color: $primary-hover-color;
+        }
+      }
+
+      @media only screen and (max-width: 960px){
+        &{
+          position: fixed;
+          top: $nav-height;right: -$aside-width;
+        }
+        .slide-icon{
+          display: block;
+        }
+      }
+    }
+  }

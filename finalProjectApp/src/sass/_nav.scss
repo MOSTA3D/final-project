@@ -1,0 +1,197 @@
+nav.s-nav{
+    position: fixed;
+    @include flex-box(true, space-between);
+    height: 60px;
+    width: 100%;
+    padding: 0 20px;
+    background-color: $primary-color;
+    z-index: 2;
+
+    @media only screen and (max-width: 480px){
+      padding: 0 10px;
+      span.nav-title {
+        font-size: 12pt;
+      }
+    }
+
+    .icon-left-angle{
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: $dtrans;
+      
+      &:hover{
+        color: #1eb8ff;
+      }
+    }
+
+    span.nav-title{
+      height: 100%;
+      line-height: 60px;
+      background-image: linear-gradient(to right, $primary-color, #111, $primary-color);
+    }
+  
+    > div:first-of-type{
+      position: relative;
+      text-align: center;
+      line-height: 15px;
+      cursor: pointer;
+      font-size: 10pt;
+
+      span{
+        transition: $dtrans;
+        &:hover{
+          color: #1eb8ff;
+        }
+      }
+    }
+
+    div.side-menu{
+      position: absolute;
+      top: 60px;right:0;
+      width: 70px;
+      height: 250px;
+      @include flex-box(false, space-around);
+      padding-bottom: 20px;
+      text-align: center;
+      transform: translateX(70px);
+      background-color: $primary-color;
+      border-radius: 0 0 0 50px;
+      transition: $menu-trans;
+      z-index: 1;
+
+      &.open{
+        transform: translateX(0);
+      }
+
+      // nesting
+      span{
+        font-size: 22pt;
+        cursor: pointer;
+        transition: $dtrans;
+
+        &:hover{
+          color: #1eb8ff;
+        }
+        //nesting
+        h6{
+          font-size: 8pt;
+        }
+      }
+    }
+
+    .areas{
+      display: none;
+      position: absolute;
+      top: 60px;left:-50px;
+      width: 150px;
+      // background-color: #489679;
+      background-color: #156082;
+      border-radius: 4px;
+      transition: $dtrans;
+      opacity:0;
+
+      &.open{
+        display: block;
+        opacity: 1;
+      }
+
+      &::before{
+        content: "";
+        position: absolute;
+        top: -20px;right: 46%;
+        display: block;
+        border: 10px solid transparent;
+        // border-bottom-color: rgb(86, 138, 166);
+        // border-bottom-color: #489679;
+        border-bottom-color: #156082;
+        border-bottom-width: 10px;
+      }
+
+      //nesting
+      ul li{
+        min-height: 40px;
+        padding: 8px;
+        line-height: 20px;
+        border-bottom: 2px solid #ddd;
+        text-align: left;
+
+      
+        transition: $dtrans;
+
+        &:hover{
+          opacity: 1;
+          color: #489679;
+          background-color: #ddd;
+        }
+      }
+
+      ul li:last-of-type{
+        border-bottom: none;
+      }
+      //nesting
+
+    }
+
+    .side-card{
+      display: none;
+      position: absolute;
+      top: 0;
+      left: -210px;
+      width: 200px;
+      border-radius: 30px 5px 5px;
+      min-height: 178px;
+      line-height: 20pt;
+      padding: 10px;
+      text-align: left;
+      background-color: #156082;
+      opacity: 0.85;
+      cursor: default;
+
+      &.open{
+        display: block;
+      }
+
+      // nesting
+      img{
+        width: 100%;
+        height: 100px;
+        background-size: cover;
+        margin: 0 0 10px;
+        border-radius: 20px 5px 0 0;
+      }
+    }
+  
+    span.flip-icon{
+      cursor: pointer;
+      width: 30px;
+      height: 26px;
+      @include flex-box(false);
+      transition: $menu-trans;
+
+      &.flipped{
+        transform: rotate(90deg);
+      }
+
+      //nesting
+      div{
+        width: 100%;
+        height: 3px;
+        background-color: #eee;
+        border-radius: 1px;
+      }
+    }
+  
+    div.clock{
+      display: inline-block;
+  
+      padding-left: 10px;
+      width:90px;
+      font:10pt 'Orbitron', sans-serif;
+    }
+    @media screen and (max-width: 600px) {
+      div.clock{
+        display: none;
+      }
+    }
+  }
+  
