@@ -31,13 +31,15 @@ $menu-trans: all 0.3s cubic-bezier(0.74, 0.02, 1, 1);
   box-sizing: border-box;
 }
 
+html, body, #root, .App{
+  min-height: 100%;
+}
+
 body{
-  min-height: 100vh;
   color: white;
   background-color: #eee;
   font-size: 14pt;
   font-family: $main-font;
-  // overflow-x: hidden;
 }
 
 button{

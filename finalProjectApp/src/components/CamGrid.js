@@ -9,7 +9,6 @@ import { getCameras } from "../actions/cameras";
 
 
 // assets
-import video from "./assets/final.mp4";
 
 
 // general declarations

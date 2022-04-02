@@ -10,7 +10,6 @@ const active = (ref)=>{
 }
 
 export const combineDispatches = (...dispatches)=>action=>{
-    console.log(dispatches[0](action));
     dispatches.forEach(dispatch=>dispatch(action));
 }
 

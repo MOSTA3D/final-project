@@ -1,0 +1,21 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd finalProjectApp && npm start;cd ../finalProjectBackend && npm run watch && cd .."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MOSTA3D/final-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MOSTA3D/final-project/issues"
+  },
+  "homepage": "https://github.com/MOSTA3D/final-project#readme"
+}

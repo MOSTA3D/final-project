@@ -1,7 +1,7 @@
 // global variables
 
 .camera{
-    $camera-height: calc(100vh - 110px);
+    $camera-height: calc(100% - 110px);
 
     position: relative;
     min-height: $camera-height;
@@ -16,7 +16,7 @@
     //nesting
 
     main.camera-main{
-      min-height: $camera-height;
+      height: 100%;
       flex: 1;
       display: grid;
       grid-template-rows: minmax(auto, 380px) auto;
@@ -81,7 +81,6 @@
         &{
           grid-template-rows: 250px 120px auto;
           grid-template-columns: 1fr;
-          
           padding: 0;
         }
 
@@ -94,6 +93,8 @@
     >aside{
       $aside-color: #092938;
       $aside-width: 270px;
+
+      min-height: 100%;
       width: $aside-width;
       background-color: $aside-color;
       transition: $menu-trans;
@@ -120,10 +121,9 @@
       }
 
       ul{
-        height:$camera-height;
+        height:auto;
         overflow: auto;
         padding-top: 20px;
-        
       }
 
       ul li{

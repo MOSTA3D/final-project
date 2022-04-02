@@ -1,8 +1,7 @@
 div.signup{
     margin-top: $nav-height;
     position: relative;
-    height: calc(100vh - 100px);
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 110px);
     display: grid;
     grid-template-rows: 36px 1fr 36px;
     grid-template-columns: minmax(150px, 1fr) 450px;
