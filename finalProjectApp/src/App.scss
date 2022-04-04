@@ -32,6 +32,7 @@ $menu-trans: all 0.3s cubic-bezier(0.74, 0.02, 1, 1);
 }
 
 html, body, #root, .App{
+  height: 100%;
   min-height: 100%;
 }
 

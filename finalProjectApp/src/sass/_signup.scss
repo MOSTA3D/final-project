@@ -7,7 +7,6 @@ div.signup{
     grid-template-columns: minmax(150px, 1fr) 450px;
   
     @media only screen and (max-width: $min-width){
-      height: 100%;
       grid-template-rows: 150px 1fr 40px;
       grid-template-columns: 1fr;
       gap: 14px;
@@ -24,12 +23,12 @@ div.signup{
     // message
     div.message{
       position: absolute;
+      bottom: 30px; left: 10px;
       display: none;
+      padding: 7px 70px 7px 20px;
       opacity: 0;
-      top: 0;
-      left: 0;
-      padding: 10px;
-      background-color: rgba(255, 98, 0, 0.489);
+      border-radius: 5px;
+      background-color: rgba(220, 71, 37, 0.8);
       transition: $dtrans;
   
       &.active{

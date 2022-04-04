@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AppContext } from "./App"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVideoCamera, faBackward } from '@fortawesome/free-solid-svg-icons';
+import { faVideoCamera, faForward } from '@fortawesome/free-solid-svg-icons';
 
 function Camera(props){
     // router
@@ -40,6 +40,19 @@ function Camera(props){
     return (
         currentCamera?(
             <div className="camera">
+                <aside className={isSideMenu ? "open":""}>
+                    <div className="slide-icon" onClick={onSlideIconClick}>
+                        <FontAwesomeIcon style={{transform: isSideMenu ? "rotate(180deg)" : "rotate(0deg)"}} icon={faForward} />
+                    </div>
+                    <ul>
+                        {cameraState.map(el=>
+                            <li key={el.id} className={el.id===Number(id)?"active":""} onClick={handleCameraClick} data-cid={el.id}>
+                                Camera number {el.id}<FontAwesomeIcon style={{direction: "rtl"}} icon={faVideoCamera} />
+                            </li>
+                        )}
+                    </ul>
+                </aside>
+                <div className="reserver"></div>
                 <main className="camera-main">
                     <main>
                             <video src={currentCamera.url} controls>
@@ -50,38 +63,25 @@ function Camera(props){
 
                     </aside>
                     <footer>
-                    <div>
-                        <h3>
-                            Summary
-                        </h3>
-                        <hr />
-                        <br />
-                        <ul>
-                            <li>somthing</li>
-                            <li>went</li>
-                            <li>wrong</li>
-                        </ul>
-                    </div>
+                        <div>
+                            <h3>
+                                Summary
+                            </h3>
+                            <hr />
+                            <br />
+                            <ul>
+                                <li>somthing</li>
+                                <li>went</li>
+                                <li>wrong</li>
+                            </ul>
+                        </div>
+                    </footer>
                     <div className="controller">
                         <button>
                             Generate report
                         </button>
                     </div>
-                </footer>
-
                 </main>
-                <aside className={isSideMenu ? "open":""}>
-                    <div className="slide-icon" onClick={onSlideIconClick}>
-                        <FontAwesomeIcon style={{transform: isSideMenu ? "rotate(180deg)" : "rotate(0deg)"}} icon={faBackward} />
-                    </div>
-                    <ul>
-                        {cameraState.map(el=>
-                            <li key={el.id} className={el.id===Number(id)?"active":""} onClick={handleCameraClick} data-cid={el.id}>
-                                Camera number {el.id}<FontAwesomeIcon style={{direction: "rtl"}} icon={faVideoCamera} />
-                            </li>
-                        )}
-                    </ul>
-                </aside>
             </div>
         ):(
             <div>
