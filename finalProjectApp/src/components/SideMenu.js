@@ -1,5 +1,10 @@
+import { useContext } from "react";
+
+import { AppContext } from "./App";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDoorOpen, faHouse, faFaceGrinWide} from "@fortawesome/free-solid-svg-icons";
+
 // import { grid } from "@fortawesome/free-solid-svg-icons";
 
 import { Link } from "react-router-dom";
@@ -8,8 +13,11 @@ function SideMenu (props){
 
     const { sideMenu, setAuthed } = props;
 
+    const [{user}] = useContext(AppContext);
+
     // handlers
     const logoutHandler = (e)=>{
+        user.current = "";
         document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC";
         setAuthed(false);
     };

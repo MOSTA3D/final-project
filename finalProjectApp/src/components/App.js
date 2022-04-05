@@ -9,7 +9,6 @@ import Camera from './Camera';
 import Test from "./Test";
 
 // configuration
-import {SERVER_URL} from "../utils/config"
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
@@ -20,8 +19,8 @@ import areasReducer from "../reducers/areas";
 import camerasReducer from '../reducers/cameras';
 import { combineDispatches } from "../utils/helper";
 
-import { Route, Routes, Redirect } from "react-router-dom";
-import { useState, useEffect, useReducer, createContext } from "react";
+import { Route, Routes } from "react-router-dom";
+import { useState, useEffect, useReducer, createContext, useRef } from "react";
 
 // helpers
 
@@ -40,9 +39,11 @@ function App() {
   const [areaState, areaDispatch] = useReducer(areasReducer, {});
   const [cameraState, cameraDispatch] = useReducer(camerasReducer, []);
   const [currentAreaState, currentAreaDispatch] = useReducer(currentArea, 1);
+  // const [user, userDispatch] = useReducer(userReducer, document.cookie.split(";")[0].split("=")[1]);
+  const user = useRef(document.cookie.split(";")[0].split("=")[1]);
 
   const dispatch = combineDispatches(areaDispatch, currentAreaDispatch, cameraDispatch);
-  const state = { areaState, currentAreaState, cameraState };
+  const state = { areaState, currentAreaState, cameraState, user};
 
   //effects
   useEffect(async ()=>{

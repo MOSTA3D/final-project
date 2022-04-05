@@ -27,13 +27,13 @@ function CamGrid() {
     const wrapperRef = useRef(null);
 
     // context
-    const [{cameraState, currentAreaState}, dispatch ] = useContext(AppContext);
+    const [{cameraState, currentAreaState, user}, dispatch ] = useContext(AppContext);
     // sideEffects
     useEffect(async ()=>{
         try{
             const cameras = await postData(`${SERVER_URL}/cameras`, {
                 areaId: currentAreaState
-            });
+            }, user.current);
             if(!cameras){
                 throw cameras;
             }

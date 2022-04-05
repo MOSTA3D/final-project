@@ -1,7 +1,9 @@
 import image from "./assets/logo_vector.svg";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 
 import { postData } from "../utils/helper";
+
+import { AppContext } from "./App";
 
 // global declarations
 const dErrShdw = "0 0 3px 2px rgb(230 73 53)";
@@ -40,6 +42,9 @@ function Signup(props){
 
     }
 
+    const [{user}] = useContext(AppContext);
+
+    // handlers
     const onSubmitClick = async (e)=>{
         e.preventDefault();
         const data = login? {email, password} : {firstname, lastname, email, password};
@@ -59,6 +64,7 @@ function Signup(props){
                 throw token.message;
             }
 
+            user.current = token;
             document.cookie = `token=${token}`;
             console.log(token);
             setAuthed(true);

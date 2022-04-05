@@ -25,8 +25,8 @@ function AreasMenu(props){
     const [isSideCard, setIsSideCard] = useState(false);
 
     // useContext
-    const [state, dispatch] = useContext(AppContext);
-    const areas = state.areaState;
+    const [{ areaState, user }, dispatch] = useContext(AppContext);
+    const areas = areaState;
 
     // react router
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ function AreasMenu(props){
         try{
             const data = await (await fetch(`${SERVER_URL}/areas`,{
                 headers:{
-                    'Authorization': `Bearer ${document.cookie.split(";")[0].split("=")[1]}`
+                    'Authorization': `Bearer ${user.current}`
                 }
             })).json();
             if(data.message){

@@ -1,19 +1,19 @@
-const token = document.cookie.split(";")[0].split("=")[1];
+// const token = document.cookie.split(";")[0].split("=")[1];
 
-const active = (ref)=>{
-    return new Promise((acc, rej)=>{
-        ref.classList.add("active");
-        setTimeout(()=>{
-            ref.classList.removeClass("active");
-        }, 4000)
-    })
-}
+// const active = (ref)=>{
+//     return new Promise((acc, rej)=>{
+//         ref.classList.add("active");
+//         setTimeout(()=>{
+//             ref.classList.removeClass("active");
+//         }, 4000)
+//     })
+// }
 
 export const combineDispatches = (...dispatches)=>action=>{
     dispatches.forEach(dispatch=>dispatch(action));
 }
 
-export async function postData(url="", data={}){
+export async function postData(url="", data={}, token){
     let response;
     try{
         response = await fetch(url, {
