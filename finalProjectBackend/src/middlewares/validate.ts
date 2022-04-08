@@ -23,7 +23,6 @@ export const validateToken = (req:Request, res:Response, next:NextFunction)=>{
     }
 
     const token = authHdr.split(" ")[1];
-    console.log(authHdr);
     try{
         const user = jwt.verify(token, PVTKEY as string);
         res.locals.user = user;

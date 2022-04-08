@@ -17,6 +17,7 @@ import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import currentArea from '../reducers/currentArea';
 import areasReducer from "../reducers/areas";
 import camerasReducer from '../reducers/cameras';
+import peopleReducer from "../reducers/people";
 import { combineDispatches } from "../utils/helper";
 
 import { Route, Routes } from "react-router-dom";
@@ -30,25 +31,38 @@ library.add(faEnvelope, faKey);
 
 export const AppContext = createContext();
 
+// global variables
+const ws = new WebSocket("ws://localhost:3001/", "echo-protocol");
+
 function App() {
   //state
   const [ authed, setAuthed ] = useState(!!document.cookie);
   const [ login, setLogin ] = useState(true);
   
+  // web socket
+
+
   // Reducer
   const [areaState, areaDispatch] = useReducer(areasReducer, {});
   const [cameraState, cameraDispatch] = useReducer(camerasReducer, []);
   const [currentAreaState, currentAreaDispatch] = useReducer(currentArea, 1);
+  const [people, peopleDispatch] = useReducer(peopleReducer, "");
+
   // const [user, userDispatch] = useReducer(userReducer, document.cookie.split(";")[0].split("=")[1]);
   const user = useRef(document.cookie.split(";")[0].split("=")[1]);
 
-  const dispatch = combineDispatches(areaDispatch, currentAreaDispatch, cameraDispatch);
-  const state = { areaState, currentAreaState, cameraState, user};
+  const dispatch = combineDispatches(areaDispatch, currentAreaDispatch, cameraDispatch, peopleDispatch);
+  const state = { areaState, currentAreaState, cameraState, user, ws, people };
 
   //effects
   useEffect(async ()=>{
     // const areas = await(await fetch(SERVER_URL + "/areas")).json();
-    const ws = new WebSocket("ws://localhost:3001/", "echo-protocol");
+    // ws.addEventListener("open", ()=>{
+    //   // ws.send("ya hala b elserver.");
+    //   ws.addEventListener("message", (buffer)=>{
+    //     console.log("the message from the web socket server", buffer);
+    //   })
+    // });
     return ()=>{
       ws.close();
     }
@@ -64,12 +78,12 @@ function App() {
 
         {authed?(
           <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/grid" element={<CamGrid />} />
-          <Route path="/grid/:id" element={<Camera />} />
-          <Route path="/test" element={<Test />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/grid" element={<CamGrid />} />
+            <Route path="/grid/:id" element={<Camera />} />
+            <Route path="/test" element={<Test />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
         ):(
           <Signup { ...{login, setAuthed, setLogin } }/>
         )}

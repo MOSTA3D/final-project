@@ -6,7 +6,13 @@ import { Camera, Err } from "../utils/types";
 const camerasInstance = new CamerasModel();
 
 export const getAreasCameras = async (req:Request, res:Response)=>{
-        const cameras:Camera[]|Err = await camerasInstance.getAreasCameras(req.body.areaId);
+        const { areaId } = req.body;
+        let cameras:Camera[]|Err;
+        if(areaId){
+                cameras = await camerasInstance.getAreasCameras(areaId);
+        }else{
+                cameras = await camerasInstance.getAllCameras();
+        }
         console.log(cameras);
         res.json(cameras);
 }

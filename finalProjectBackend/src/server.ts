@@ -10,6 +10,9 @@ import { getAreasCameras } from "./handlers/cameras";
 
 import { validateToken } from "./middlewares/validate";
 
+// determination variable for websocket sending
+let isInformed:boolean = true;
+
 dotenv.config()
 
 const app:Application = express();
@@ -36,24 +39,51 @@ app.use("/images", express.static("images"));
 app.get("/areas", validateToken, areas);
 app.post("/cameras", validateToken, getAreasCameras);
 
-app.all("*", (req: Request, res:Response)=>{
-    res.status(404).send("Error 404 not found")
-});
+
 
 
 const server = app.listen(port, address, ()=>{
     console.log("SERVER INIT.....");
 });
 
+// testing region
+let webSocketSend:Function;
 
-// const ws = new WebSocket.Server({server})
+function webSocketCallBack(lws?:WebSocket.WebSocket):void{
+    console.log("from web socket callback");
+    (lws as unknown as WebSocket.WebSocket).send("web socket call back");
+}
 
-// ws.on("connection", (ws)=>{
+const ws = new WebSocket.Server({server});
+
+ws.on("connection", (lws)=>{
+    console.log("connection established.");
+    webSocketSend = webSocketCallBack.bind(this, lws);
+});
+
+app.get("/inform", (req: Request, res: Response)=>{
+    console.log("from inform");
+    webSocketSend();
+    res.send("hello world from inform route");
+});
+
+app.all("*", (req: Request, res:Response)=>{
+    res.status(404).send("Error 404 not found")
+});
+
+// app.post("/inform", (req:Request, res:Response)=>{
+//     const data = req.body;
+//     ws.on("message", (buffer)=>{
+//         console.log("messaged");
+//         console.log("recieved the message and it's: ", buffer.toString());
+//     })
+// });
+
+// ws.on("connection", (lws)=>{
 //     console.log("hello world, ya welcome b el-client");
-
-//     ws.send("ya hala walla ya client");
-
-//     ws.on("message", (message)=>{
-//         console.log("recieved the message and it's: ", message);
+//     lws.send("some");
+//     ws.on("message", (buffer)=>{
+//         console.log("messaged");
+//         console.log("recieved the message and it's: ", buffer.toString());
 //     })
 // })

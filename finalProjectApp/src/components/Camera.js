@@ -6,17 +6,20 @@ import { AppContext } from "./App"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideoCamera, faForward } from '@fortawesome/free-solid-svg-icons';
 
+import { getPeople } from "../actions/people";
+
 function Camera(props){
     // router
     const { id } = useParams();
     const navigate = useNavigate();
 
     // global state
-    const [ {cameraState} ] = useContext(AppContext);
+    const [ {cameraState, ws, people}, dispatch ] = useContext(AppContext);
 
     // local state
     const [ isSideMenu, setIsSideMenu ] = useState(false);
     const [ currentCamera, setCurrentCamera ] = useState(null);
+    const [ persons, setPersons ] = useState("");
 
     // sideeffects
     useEffect(()=>{
@@ -26,6 +29,17 @@ function Camera(props){
         }else{
             navigate("/grid");
         }
+
+        ws.addEventListener("open", ()=>{
+            ws.addEventListener("message", (buffer)=>{
+                console.log(buffer.data);
+                dispatch(getPeople(buffer.data));
+            })
+        });
+
+        // return ()=>{
+        //     ws.close();
+        // }
     }, [])
 
     // handlers
@@ -60,7 +74,7 @@ function Camera(props){
                             </video>
                     </main>
                     <aside>
-
+                            {people}
                     </aside>
                     <footer>
                         <div>
