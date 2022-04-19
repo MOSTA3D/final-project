@@ -4,12 +4,13 @@ import { useRef, useState, useContext } from "react";
 import { postData } from "../utils/helper";
 
 import { AppContext } from "./App";
+import { SERVER_URL } from "../utils/config";
 
 // global declarations
 const dErrShdw = "0 0 3px 2px rgb(230 73 53)";
 const nameRegex = /^[a-zA-Z]+$/;
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-const passordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+const passordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
 //helper functions
 const checkRegex = (e, condition)=>{
@@ -19,6 +20,7 @@ const checkRegex = (e, condition)=>{
         e.target.style.boxShadow = dErrShdw;
     }
 }
+
 
 function Signup(props){
 
@@ -44,6 +46,25 @@ function Signup(props){
 
     const [{user}] = useContext(AppContext);
 
+    // helper functions
+    function showErrMessage(message){
+        myRef.current.innerHTML = message;
+        // myRef.current.style.display = "block";
+
+        (new Promise((acc, rej)=>{
+            myRef.current.style.display = "block";
+            acc();
+        })).then(()=>{
+            myRef.current.classList.add("active");
+        })
+
+        // myRef.current.classList.add("active");
+        setTimeout(()=>{
+            myRef.current.classList.remove("active");
+            setTimeout(()=>myRef.current.style.display = "none", 200)
+        }, 1000)
+    }
+
     // handlers
     const onSubmitClick = async (e)=>{
         e.preventDefault();
@@ -52,14 +73,30 @@ function Signup(props){
         // todo-validation
 
         if(!login){
-            if(!(firstname.match(nameRegex)&&lastname.match(nameRegex)&&email.match(emailRegex)&&password.match(passordRegex)&&cpassword===password)){
+            if(!(firstname && firstname.match(nameRegex) && lastname && lastname.match(nameRegex))){
+                showErrMessage("Enter valid name");
+                return;
+            }
+
+            if(!(email && email.match(emailRegex))){
+                showErrMessage("Enter valid email");
+                return;
+            }
+
+            if(!(password && password.match(passordRegex))){
+                showErrMessage("Password must contain 1 upper and lowercase, number and a special character");
+                return;
+            }
+
+            if(cpassword !== password){
+                showErrMessage("Type the same password");
                 return;
             }
         }
 
 
         try{
-            const token = await postData("http://localhost:3001/" + (login? "signin" : "signup"), data);
+            const token = await postData(SERVER_URL + (login? "/signin" : "/signup"), data);
             if(token.message){
                 throw token.message;
             }
@@ -69,21 +106,7 @@ function Signup(props){
             console.log(token);
             setAuthed(true);
         }catch(err){
-            myRef.current.innerHTML = err;
-            // myRef.current.style.display = "block";
-
-            (new Promise((acc, rej)=>{
-                myRef.current.style.display = "block";
-                acc();
-            })).then(()=>{
-                myRef.current.classList.add("active");
-            })
-
-            // myRef.current.classList.add("active");
-            setTimeout(()=>{
-                myRef.current.classList.remove("active");
-                setTimeout(()=>myRef.current.style.display = "none", 200)
-            }, 1000)
+            showErrMessage(err);
             console.error(err);
         }
 

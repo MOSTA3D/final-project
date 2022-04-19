@@ -34,7 +34,7 @@ function Camera(props){
             ws.addEventListener("message", (buffer)=>{
                 console.log(buffer.data);
                 dispatch(getPeople(buffer.data));
-            })
+            });
         });
 
         // return ()=>{
@@ -48,7 +48,9 @@ function Camera(props){
     }
 
     const handleCameraClick = (e)=>{
+        setIsSideMenu(false);
         navigate(`/grid/${e.target.dataset.cid}`)
+
     }
 
     return (

@@ -41,3 +41,10 @@ export interface Camera{
     url: string;
     areaId?: number;
 }
+
+export interface Incident{
+    entities: string[],
+    cid: number,
+    type: string,
+    dateTime: string
+}

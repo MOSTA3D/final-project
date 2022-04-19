@@ -1,0 +1,3 @@
+CREATE TABLE incidents (id SERIAL PRIMARY KEY, type VARCHAR(15));
+CREATE TABLE entities (id SERIAL PRIMARY KEY, img VARCHAR, iid BIGINT REFERENCES incidents(id));
+

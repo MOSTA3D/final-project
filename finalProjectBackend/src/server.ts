@@ -17,7 +17,8 @@ dotenv.config()
 
 const app:Application = express();
 
-const address = "127.0.0.1";
+// const address = "127.0.0.1";
+const address = "192.168.1.4";
 const port = 3001;
 
 app.use(bodyParser.json());
@@ -52,18 +53,25 @@ let webSocketSend:Function;
 function webSocketCallBack(lws?:WebSocket.WebSocket):void{
     console.log("from web socket callback");
     (lws as unknown as WebSocket.WebSocket).send("web socket call back");
+    // console.log(lws);
 }
 
 const ws = new WebSocket.Server({server});
+ws.on("connection", ()=>{
+    console.log("client connect");
+})
 
-ws.on("connection", (lws)=>{
-    console.log("connection established.");
-    webSocketSend = webSocketCallBack.bind(this, lws);
-});
+// ws.on("connection", (lws, request)=>{
+//     console.log("connection established.");
+//     webSocketSend = webSocketCallBack.bind(this, lws);
+//     ws.on("message", (buffer)=>{
+//         console.log(buffer.toString());
+//     })
+// });
 
 app.get("/inform", (req: Request, res: Response)=>{
-    console.log("from inform");
-    webSocketSend();
+    const data = req.body;
+    ws.clients.forEach(client=>client.send("inform has been triggerred."));
     res.send("hello world from inform route");
 });
 

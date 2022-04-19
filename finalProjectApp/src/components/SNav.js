@@ -59,7 +59,7 @@ function SNav(props){
                 <>
                     <AreasMenu {...{isShowAreas, showAreas}} />
                     <FlipIcon {...{flipped, onFlipIconClick}} />
-                    <SideMenu {...{sideMenu, setAuthed}} />
+                    <SideMenu {...{sideMenu, setAuthed, onFlipIconClick}} />
                 </>
             )}
         </nav>

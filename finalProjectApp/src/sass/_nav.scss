@@ -72,6 +72,24 @@ nav.s-nav{
         &:hover{
           color: #1eb8ff;
         }
+        .my-grid-icon{
+          @include flex-box(true);
+          // align-items: ;
+          flex-wrap: wrap;
+          width: 35px;
+          height: 35px;
+  
+          // nesiting
+          span{
+            width: 28%;
+            height: 28%;
+            background-color: #ddd;
+            border-radius: 30%;
+          }
+          &:hover span{
+            background-color: #1eb8ff;
+          }
+        }
         //nesting
         h6{
           font-size: 8pt;
@@ -136,9 +154,9 @@ nav.s-nav{
       display: none;
       position: absolute;
       top: 0;
-      left: -210px;
-      width: 200px;
-      border-radius: 30px 5px 5px;
+      left: -197px;
+      width: 190px;
+      border-radius: 5px;
       min-height: 178px;
       line-height: 20pt;
       padding: 10px;
@@ -157,7 +175,7 @@ nav.s-nav{
         height: 100px;
         background-size: cover;
         margin: 0 0 10px;
-        border-radius: 20px 5px 0 0;
+        border-radius: 5px 5px 0 0;
       }
     }
   

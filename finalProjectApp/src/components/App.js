@@ -32,13 +32,13 @@ library.add(faEnvelope, faKey);
 export const AppContext = createContext();
 
 // global variables
-const ws = new WebSocket("ws://localhost:3001/", "echo-protocol");
+const ws = new WebSocket("ws://192.168.1.4:3001/", "echo-protocol");
 
 function App() {
   //state
   const [ authed, setAuthed ] = useState(!!document.cookie);
   const [ login, setLogin ] = useState(true);
-  
+
   // web socket
 
 
@@ -63,6 +63,9 @@ function App() {
     //     console.log("the message from the web socket server", buffer);
     //   })
     // });
+    ws.addEventListener("close", ()=>{
+      ws.send("closed");
+    })
     return ()=>{
       ws.close();
     }
