@@ -18,8 +18,8 @@ dotenv.config()
 const app:Application = express();
 
 // const address = "127.0.0.1";
-const address = "192.168.1.4";
-const port = 3001;
+const address = "localhost";
+const port = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -43,7 +43,7 @@ app.post("/cameras", validateToken, getAreasCameras);
 
 
 
-const server = app.listen(port, address, ()=>{
+const server = app.listen(Number(port), ()=>{
     console.log("SERVER INIT.....");
 });
 
@@ -53,21 +53,12 @@ let webSocketSend:Function;
 function webSocketCallBack(lws?:WebSocket.WebSocket):void{
     console.log("from web socket callback");
     (lws as unknown as WebSocket.WebSocket).send("web socket call back");
-    // console.log(lws);
 }
 
 const ws = new WebSocket.Server({server});
 ws.on("connection", ()=>{
     console.log("client connect");
 })
-
-// ws.on("connection", (lws, request)=>{
-//     console.log("connection established.");
-//     webSocketSend = webSocketCallBack.bind(this, lws);
-//     ws.on("message", (buffer)=>{
-//         console.log(buffer.toString());
-//     })
-// });
 
 app.get("/inform", (req: Request, res: Response)=>{
     const data = req.body;
@@ -78,20 +69,3 @@ app.get("/inform", (req: Request, res: Response)=>{
 app.all("*", (req: Request, res:Response)=>{
     res.status(404).send("Error 404 not found")
 });
-
-// app.post("/inform", (req:Request, res:Response)=>{
-//     const data = req.body;
-//     ws.on("message", (buffer)=>{
-//         console.log("messaged");
-//         console.log("recieved the message and it's: ", buffer.toString());
-//     })
-// });
-
-// ws.on("connection", (lws)=>{
-//     console.log("hello world, ya welcome b el-client");
-//     lws.send("some");
-//     ws.on("message", (buffer)=>{
-//         console.log("messaged");
-//         console.log("recieved the message and it's: ", buffer.toString());
-//     })
-// })

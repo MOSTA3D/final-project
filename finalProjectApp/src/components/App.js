@@ -32,7 +32,7 @@ library.add(faEnvelope, faKey);
 export const AppContext = createContext();
 
 // global variables
-const ws = new WebSocket("ws://192.168.1.4:3001/", "echo-protocol");
+const ws = new WebSocket("wss://detectorserver.azurewebsites.net", "echo-protocol");
 
 function App() {
   //state

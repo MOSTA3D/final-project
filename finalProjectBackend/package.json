@@ -2,18 +2,19 @@
   "name": "final-project-backend",
   "version": "0.1.0",
   "description": "final project backend development",
-  "main": "server.ts",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/MOSTA3D/storebackend.git"
   },
   "scripts": {
-    "start": "node server.ts",
+    "start": "node server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "test": "ENV=test db-migrate --env test up&&jasmine-ts --random=false&&db-migrate --env test down",
-    "build": "tsc && cp package.json ./dist"
+    "build": "rm -rf ./dist && tsc && cp package.json ./dist && cp -R ./images ./dist",
+    "deploy": "chmod 755 ./bin/deploy.sh && ./bin/deploy.sh"
   },
-  "author": "Udacity",
+  "author": "someone",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -21,6 +22,7 @@
     "cors": "^2.8.5",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
@@ -36,7 +38,6 @@
     "@types/pg": "^7.14.11",
     "@types/supertest": "^2.0.11",
     "@types/ws": "^8.5.3",
-    "dotenv": "^16.0.0",
     "jasmine": "^3.99.0",
     "jasmine-spec-reporter": "^6.0.0",
     "jasmine-ts": "^0.3.3",

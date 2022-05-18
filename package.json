@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd finalProjectApp && npm start;cd ../finalProjectBackend && npm run watch && cd .."
+    "backend:test": "cd finalProjectBackend && npm run test",
+    "frontend:test": "cd finalProjectApp && npm run test ",
+    "frontend:install": "cd finalProjectApp && npm install",
+    "backend:install": "cd finalProjectBackend && npm install",
+    "frontend:deploy": "cd finalProjectApp && npm run deploy",
+    "backend:deploy": "cd finalProjectBackend && npm run deploy"
   },
   "repository": {
     "type": "git",
