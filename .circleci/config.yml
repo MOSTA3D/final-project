@@ -31,11 +31,6 @@ jobs:
           command: |
             npm run backend:test && npm run frontend:test
       - run:
-          # setting environment variable
-          name: providing environment variables
-          command: |
-            chmod 755 ./bin/setenv.sh && ./bin/setenv.sh
-      - run:
           name: detector-frontend build
           command: |
             npm run frontend:build
