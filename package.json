@@ -9,6 +9,8 @@
     "frontend:test": "cd finalProjectApp && npm run test ",
     "frontend:install": "cd finalProjectApp && npm install",
     "backend:install": "cd finalProjectBackend && npm install",
+    "frontend:build": "cd finalProjectApp && npm run build",
+    "backend:build": "cd finalProjectBackend && npm run build",
     "frontend:deploy": "cd finalProjectApp && npm run deploy",
     "backend:deploy": "cd finalProjectBackend && npm run deploy"
   },
