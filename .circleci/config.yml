@@ -16,6 +16,11 @@ jobs:
       - checkout
       - azure-cli/install
       - run:
+          # setting azure-cli credential
+          name: setting username and password
+          command: |
+            az login -u $AZURE_USERNAME -p $AZURE_PASSWORD
+      - run:
           # install dependencies in both apps
           name: detector-frontend install
           command: |
