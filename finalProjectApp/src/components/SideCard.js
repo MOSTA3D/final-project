@@ -8,7 +8,7 @@ function SideCard(props){
                 <div className={"side-card" + (show?" open":"")}>
                     {name?(
                         <>
-                            <img src={SERVER_URL+"/images/"+image} alt={name} />
+                            <img src={image} alt={name} />
                             <h2>{name}</h2>
                         </>
                     ):(

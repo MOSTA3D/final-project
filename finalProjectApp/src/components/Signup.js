@@ -35,14 +35,8 @@ function Signup(props){
     const { setAuthed, login, setLogin } = props;
 
     // refs
-
     const myRef = useRef(null);
-
-    // validation
-
-    const validatePassword = ()=>{
-
-    }
+    const formRef = useRef(null);
 
     const [{user}] = useContext(AppContext);
 
@@ -68,7 +62,30 @@ function Signup(props){
     // handlers
     const onSubmitClick = async (e)=>{
         e.preventDefault();
+
+        for(const child of formRef.current.children){
+            console.log(1);
+            if(child.nodeName === "INPUT" && child.value === ""){
+                child.style.boxShadow = dErrShdw;
+                if(!login){
+                    child.classList.add("error")
+                }
+            }else if(child.nodeName === "DIV"){
+                for(const gndChild of child.children){
+                    if(gndChild.value === ""){
+                        gndChild.style.boxShadow = dErrShdw;
+                    }else{
+                        gndChild.style.boxShadow = "none";
+                    }
+                }
+            }
+            else{
+                child.style.boxShadow = "none";
+            }
+        }
+
         const data = login? {email, password} : {firstname, lastname, email, password};
+
 
         // todo-validation
 
@@ -92,6 +109,8 @@ function Signup(props){
                 showErrMessage("Type the same password");
                 return;
             }
+        }else{
+            if(!(email && password)) return;
         }
 
 
@@ -165,7 +184,7 @@ function Signup(props){
             <div className="main-logo">
                 <img src={image} />
             </div>
-            <form className={"signup " + (login?"signin":"")} action={"http://localhost:3001/" + login? "signin" : "signup"} method="POST">
+            <form ref={formRef} className={"signup " + (login?"signin":"")} action={"http://localhost:3001/" + login? "signin" : "signup"} method="POST">
                 { !login && (
                     <div className="name">
                         <input type="text" placeholder="Firstname" name="firstname" value={firstname} onChange = {onFirstnameChange} />

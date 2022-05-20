@@ -33,7 +33,7 @@ function AreasMenu(props){
 
     useEffect(async ()=>{
         try{
-            const data = await (await fetch(`${SERVER_URL}/areas`,{
+            let data = await (await fetch(`${SERVER_URL}/areas`,{
                 headers:{
                     'Authorization': `Bearer ${user.current}`
                 }
@@ -41,6 +41,23 @@ function AreasMenu(props){
             if(data.message){
                 throw data;
             }
+            data = data.map(el => {
+                const image = new Image();
+                image.src = `${SERVER_URL}/images/${el.image}`;
+                image.crossOrigin = "Anonymous";
+                image.onload = ()=>{
+                    const canv = document.createElement("canvas");
+                    canv.width = image.width;
+                    canv.height = image.height;
+                    const ctx = canv.getContext("2d");
+                    ctx.drawImage(image, 0, 0);
+                    canv.toBlob((blob)=>{
+                        el.image = URL.createObjectURL(blob);
+                    })
+                }
+
+                return el;
+            });
             dispatch(recieveAreas(data));
         }catch(err){
             console.error(err);

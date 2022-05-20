@@ -77,14 +77,13 @@ div.signup{
         padding: 5px;
         width: 100%;
         height: 50px;
-        // margin: 10px auto;
         outline: none;
         border: 1px solid #ccc;
         border-radius: 7px;
         font: 1em Arial;
         
         &::before{
-          content: "";
+          content: "sdfsf";
           position: absolute;
           left: 0;top: 0;
           
@@ -108,6 +107,7 @@ div.signup{
   
       div.name{
         @include flex-box;
+        width: 100%;
         //nesting
         input{
           width: 47%;
