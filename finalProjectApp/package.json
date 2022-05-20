@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf build && react-scripts build",
     "test": "echo 'testing the app'",
     "eject": "react-scripts eject",
     "deploy": "chmod 755 ./bin/deploy.sh && ./bin/deploy.sh"
