@@ -37,6 +37,6 @@ prettier "Building the server"
 npm run build &&
 prettier "Deploying the server to Azure app services"
 npm run deploy &&
-prettier
+prettier "End of the story"
 cd ..
 
