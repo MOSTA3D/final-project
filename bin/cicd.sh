@@ -20,17 +20,17 @@ git push https://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@github.com/MOSTA3D/fin
 
 
 # frontend CICD
-cd finalProjectApp
+cd finalProjectApp &&
 prettier "Running Frontend tests"
 npm run test &&
 prettier "Building the app"
 npm run build &&
 prettier "Deploying the app to Azure app services"
 npm run deploy &&
-cd ..
+cd .. &&
 
 # backend CICD
-cd finalProjectBackend
+cd finalProjectBackend &&
 prettier "Running Backend tests"
 npm run test &&
 prettier "Building the server"
