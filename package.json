@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "backend:test": "cd finalProjectBackend && npm run test",
     "frontend:test": "cd finalProjectApp && npm run test ",
     "frontend:install": "cd finalProjectApp && npm install",
