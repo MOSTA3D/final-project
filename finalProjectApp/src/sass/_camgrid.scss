@@ -1,4 +1,5 @@
 main.cam-grid{
+  $camera-radius: 5px;
   margin-top: $nav-height;
     padding: 20px;
     display: grid;
@@ -11,6 +12,8 @@ main.cam-grid{
       // background-color: rgba(19, 41, 139, 0.342);
       // min-height: 300px;
       display: grid;
+      overflow: hidden;
+      border-radius: $camera-radius;
 
       &.loading{
         background-color: rgba(0, 0, 0, 0.212);
@@ -38,7 +41,7 @@ main.cam-grid{
         top: 0;left:0;
         width: 100%;
         height: 100%;
-        background-image: url("https://cdn.wallpapersafari.com/76/79/aX83UN.jpg");
+        background-image: url("../components/assets/vid-wraper.png");
         background-size: cover;
         transition: $dtrans;
         cursor: pointer;
