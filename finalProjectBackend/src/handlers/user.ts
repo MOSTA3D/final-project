@@ -3,6 +3,8 @@ import { Err, RUser, User, UserCred } from "../utils/types";
 import UserModel from "../models/user";
 import jwt from "jsonwebtoken";
 
+import verifyFormData from "../middlewares/verifyAuth";
+
 const userInstance = new UserModel();
 const { PVTKEY } = process.env;
 
@@ -11,7 +13,7 @@ const signup = async (req:Request, res:Response)=>{
     const rUser:RUser|null|Err = await userInstance.create(user);
 
     if(!rUser){
-        return res.status(500).json({message: "internal server error"});
+        return res.status(500).json({message: "el-hacker 7aram"});
     }
 
     if((rUser as Err).code === 409){
@@ -55,7 +57,7 @@ const signin = async (req:Request, res:Response)=>{
 
 const userRoutes = (app:Application)=>{
     app.post("/signin", signin);
-    app.post("/signup", signup);
+    app.post("/signup", verifyFormData, signup);
 }
 
 export default userRoutes;
