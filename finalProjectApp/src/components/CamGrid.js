@@ -27,7 +27,7 @@ function CamGrid() {
     const wrapperRef = useRef(null);
 
     // context
-    const [{cameraState, currentAreaState, user}, dispatch ] = useContext(AppContext);
+    const [{cameraState, currentAreaState, user, crimes}, dispatch ] = useContext(AppContext);
     // sideEffects
     useEffect(async ()=>{
         try{
@@ -55,16 +55,25 @@ function CamGrid() {
     return(
         <main className="cam-grid">
             {cameraState.length?(
-                cameraState.map(el=>(
-                    <div key={el.id} className='something'>
-                        <span>
-                            <Link to={`/grid/${el.id}`}>
-                                <video src={el.url} muted={true}></video>
-                                <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="video-wrapper"></div>
-                            </Link>
-                        </span>
-                    </div>
-                ))
+                cameraState.map(el=>{
+                    let hasCrime = false;
+                    for(const crime of crimes){
+                        if(crime.camId === el.id){
+                            hasCrime = true;
+                            break;
+                        }
+                    }
+                    return (
+                        <div key={el.id} className={'something' + (hasCrime ? " has-crime" : "") }>
+                            <span>
+                                <Link to={`/grid/${el.id}`}>
+                                    <video src={el.url} muted={true}></video>
+                                    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="video-wrapper"></div>
+                                </Link>
+                            </span>
+                        </div>
+                    )
+                })
             ):(
                 elarr
             )}

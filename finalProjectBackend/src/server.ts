@@ -55,14 +55,28 @@ function webSocketCallBack(lws?:WebSocket.WebSocket):void{
     (lws as unknown as WebSocket.WebSocket).send("web socket call back");
 }
 
+
+// web socket test section
+const testData = [
+    {
+        areaId: 1,
+        camId: 2,
+        suspects: [
+            "https://media.gemini.media/img/large/2020/2/7/2020_2_7_2_38_11_438.jpg",
+            "https://i1.sndcdn.com/artworks-qzlPM6WBPKiGfvfp-mO2rjA-t500x500.jpg",
+            "https://img.ahlmasrnews.com/728x485/2020/01/%D8%AC%D9%8A%D9%85-%D9%83%D8%A7%D8%B1%D9%8A-%D9%81%D9%8A%D9%84%D9%85-%D8%A7%D9%84%D9%82%D9%86%D8%A7%D8%B9-the-mask-1580489635-0.jpg"
+        ]
+    }
+];
+
 const ws = new WebSocket.Server({server});
 ws.on("connection", ()=>{
-    console.log("client connect");
+    console.log("client connected");
 })
 
 app.get("/inform", (req: Request, res: Response)=>{
     const data = req.body;
-    ws.clients.forEach(client=>client.send("inform has been triggerred."));
+    ws.clients.forEach(client=>client.send(JSON.stringify(testData)));
     res.send("hello world from inform route");
 });
 

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { AppContext } from "./App"
@@ -6,7 +6,7 @@ import { AppContext } from "./App"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideoCamera, faForward } from '@fortawesome/free-solid-svg-icons';
 
-import { getPeople } from "../actions/people";
+import { getCrime } from "../actions/crime";
 
 function Camera(props){
     // router
@@ -14,12 +14,24 @@ function Camera(props){
     const navigate = useNavigate();
 
     // global state
-    const [ {cameraState, ws, people}, dispatch ] = useContext(AppContext);
+    const [ {cameraState, ws, crimes}, dispatch ] = useContext(AppContext);
 
     // local state
     const [ isSideMenu, setIsSideMenu ] = useState(false);
     const [ currentCamera, setCurrentCamera ] = useState(null);
-    const [ persons, setPersons ] = useState("");
+    let suspects = useRef([]);
+    // const [ persons, setPersons ] = useState("");
+
+    console.group("suspects");
+    for(const crime of crimes){
+        if(crime.camId == id){
+            suspects = crime.suspects;
+            console.log("suspects are ", suspects);
+            break;
+        }
+    }
+    console.groupEnd();
+
 
     // sideeffects
     useEffect(()=>{
@@ -29,17 +41,6 @@ function Camera(props){
         }else{
             navigate("/grid");
         }
-
-        ws.addEventListener("open", ()=>{
-            ws.addEventListener("message", (buffer)=>{
-                console.log(buffer.data);
-                dispatch(getPeople(buffer.data));
-            });
-        });
-
-        // return ()=>{
-        //     ws.close();
-        // }
     }, [])
 
     // handlers
@@ -76,7 +77,7 @@ function Camera(props){
                             </video>
                     </main>
                     <aside>
-                            {people}
+                            {suspects.length && suspects.map((image, i)=><img key={i} src={image} alt="suspect" />)}
                     </aside>
                     <footer>
                         <div>

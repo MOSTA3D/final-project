@@ -1,3 +1,4 @@
+// Components
 import '../App.scss';
 import Welcome from "./Welcome";
 import Footer from "./Footer";
@@ -8,20 +9,23 @@ import Signup from "./Signup";
 import Camera from './Camera';
 import Test from "./Test";
 
-// configuration
-
+// fontAwesome icons
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 
-// use reducer dependencies
+// Reducers
 import currentArea from '../reducers/currentArea';
 import areasReducer from "../reducers/areas";
 import camerasReducer from '../reducers/cameras';
-import peopleReducer from "../reducers/people";
+import crimeReducer from "../reducers/crime";
 import { combineDispatches } from "../utils/helper";
 
+// Dependencies
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect, useReducer, createContext, useRef } from "react";
+
+// from actions
+import { getCrime } from "../actions/crime";
 
 // helpers
 
@@ -32,7 +36,7 @@ library.add(faEnvelope, faKey);
 export const AppContext = createContext();
 
 // global variables
-const ws = new WebSocket("wss://detectorserver.azurewebsites.net", "echo-protocol");
+const ws = new WebSocket("ws:localhost:3001", "echo-protocol");
 
 function App() {
   //state
@@ -46,26 +50,26 @@ function App() {
   const [areaState, areaDispatch] = useReducer(areasReducer, {});
   const [cameraState, cameraDispatch] = useReducer(camerasReducer, []);
   const [currentAreaState, currentAreaDispatch] = useReducer(currentArea, 1);
-  const [people, peopleDispatch] = useReducer(peopleReducer, "");
+  const [crimes, crimeDispatch] = useReducer(crimeReducer, []);
 
   // const [user, userDispatch] = useReducer(userReducer, document.cookie.split(";")[0].split("=")[1]);
   const user = useRef(document.cookie.split(";")[0].split("=")[1]);
 
-  const dispatch = combineDispatches(areaDispatch, currentAreaDispatch, cameraDispatch, peopleDispatch);
-  const state = { areaState, currentAreaState, cameraState, user, ws, people };
+  const dispatch = combineDispatches(areaDispatch, currentAreaDispatch, cameraDispatch, crimeDispatch);
+  const state = { areaState, currentAreaState, cameraState, user, ws, crimes };
 
   //effects
   useEffect(async ()=>{
-    // const areas = await(await fetch(SERVER_URL + "/areas")).json();
-    // ws.addEventListener("open", ()=>{
-    //   // ws.send("ya hala b elserver.");
-    //   ws.addEventListener("message", (buffer)=>{
-    //     console.log("the message from the web socket server", buffer);
-    //   })
-    // });
+    ws.addEventListener("open", ()=>{
+      ws.addEventListener("message", (buffer)=>{
+          dispatch(getCrime(JSON.parse(buffer.data)));
+      });
+    });
+
     ws.addEventListener("close", ()=>{
       ws.send("closed");
     })
+
     return ()=>{
       ws.close();
     }

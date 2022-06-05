@@ -1,3 +1,15 @@
+@keyframes alert-shadow {
+  0%{
+    box-shadow: none;
+  }
+  50%{
+    box-shadow: 0px 0px 20px 5px #f00;
+  }
+  0%{
+    box-shadow: none;
+  }
+}
+
 main.cam-grid{
   $camera-radius: 5px;
   margin-top: $nav-height;
@@ -14,6 +26,14 @@ main.cam-grid{
       display: grid;
       overflow: hidden;
       border-radius: $camera-radius;
+
+      &.has-crime{
+        animation: alert-shadow infinite 1.5s linear;
+
+        span div.video-wrapper{
+          filter: hue-rotate(160deg);
+        }
+      }
 
       &.loading{
         background-color: rgba(0, 0, 0, 0.212);

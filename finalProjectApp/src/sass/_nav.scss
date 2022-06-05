@@ -133,6 +133,16 @@ nav.s-nav{
         border-bottom: 2px solid #ddd;
         text-align: left;
 
+        &:first-of-type{
+          border-radius: 4px 4px 0 0;
+        }
+        &:last-of-type{
+          border-radius: 0 0 4px 4px;
+        }
+        &.has-crime{
+          background-color: #d44f4a;
+        }
+
       
         transition: $dtrans;
 
