@@ -27,6 +27,9 @@ import { useState, useEffect, useReducer, createContext, useRef } from "react";
 // from actions
 import { getCrime } from "../actions/crime";
 
+// config
+import { WEBSOCKET_URL } from "../utils/config";
+
 // helpers
 
 library.add(faEnvelope, faKey);
@@ -36,7 +39,7 @@ library.add(faEnvelope, faKey);
 export const AppContext = createContext();
 
 // global variables
-const ws = new WebSocket("ws:localhost:3001", "echo-protocol");
+const ws = new WebSocket(WEBSOCKET_URL, "echo-protocol");
 
 function App() {
   //state

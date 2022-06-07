@@ -2,7 +2,7 @@ import express, { Request, Response, Application } from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
-import WebSocket from 'ws';
+import WebSocket, {WebSocketServer} from 'ws';
 
 import userRoutes from "./handlers/user";
 import { areas } from "./handlers/areas";
@@ -47,6 +47,7 @@ const server = app.listen(Number(port), ()=>{
     console.log("SERVER INIT.....");
 });
 
+
 // testing region
 let webSocketSend:Function;
 
@@ -69,7 +70,7 @@ const testData = [
     }
 ];
 
-const ws = new WebSocket.Server({server});
+const ws = new WebSocketServer({port:8081});
 ws.on("connection", ()=>{
     console.log("client connected");
 })

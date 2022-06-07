@@ -56,7 +56,7 @@ function Signup(props){
         setTimeout(()=>{
             myRef.current.classList.remove("active");
             setTimeout(()=>myRef.current.style.display = "none", 200)
-        }, 1000)
+        }, 2500)
     }
 
     // handlers
