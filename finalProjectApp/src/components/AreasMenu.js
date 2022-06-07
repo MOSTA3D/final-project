@@ -25,7 +25,7 @@ function AreasMenu(props){
     const [isSideCard, setIsSideCard] = useState(false);
 
     // useContext
-    const [{ areaState, user, crimes }, dispatch] = useContext(AppContext);
+    const [{ areaState, user, currentAreaState, crimes }, dispatch] = useContext(AppContext);
     const areas = areaState;
 
     // react router
@@ -83,13 +83,19 @@ function AreasMenu(props){
         }
     }
 
+    let count = 0;
     const areasElements = areas.length?areas.map((el, i)=>{
         let hasCrime = false;
         for(const crime of crimes){
             if(crime.areaId === el.id){
                 hasCrime = true;
-                break;
+                // break;
             }
+
+            if(currentAreaState == crime.areaId){
+                count++;
+            }
+
         }
         return (
             <li key={el.id}
@@ -103,7 +109,7 @@ function AreasMenu(props){
 
     return(
         <div onClick={showAreas}>
-            <span>
+            <span className={count < crimes.length ? "alert" : ""}>
                 Areas <br />
                 <FontAwesomeIcon icon={faAngleDown} />
             </span>

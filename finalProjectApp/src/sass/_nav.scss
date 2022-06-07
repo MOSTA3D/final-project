@@ -1,3 +1,15 @@
+@keyframes alert-areas {
+  0%{
+    color: $alert-color;
+  }
+  50%{
+    color: unset;
+  }
+  100%{
+    color: $alert-color;
+  }
+}
+
 nav.s-nav{
     position: fixed;
     @include flex-box(true, space-between);
@@ -42,6 +54,9 @@ nav.s-nav{
         &:hover{
           color: #1eb8ff;
         }
+        &.alert{
+          animation: alert-areas infinite 1.5s linear;
+        }
       }
     }
 
@@ -72,6 +87,7 @@ nav.s-nav{
         &:hover{
           color: #1eb8ff;
         }
+
         .my-grid-icon{
           @include flex-box(true);
           // align-items: ;

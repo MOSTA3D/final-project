@@ -35,6 +35,7 @@ div.signup{
       &.active{
         opacity: 1;
       }
+
       @media only screen and (max-width: $min-width){
         bottom: unset;
         top: 140px;

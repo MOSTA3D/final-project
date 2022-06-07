@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import Signup from "./Signup";
 import Camera from './Camera';
 import Test from "./Test";
+import Notifications from "./Notifications";
 
 // fontAwesome icons
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -87,13 +88,16 @@ function App() {
         </header>
 
         {authed?(
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/grid" element={<CamGrid />} />
-            <Route path="/grid/:id" element={<Camera />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
+          <>
+            {/* <Notifications/> */}
+            <Routes>
+              <Route path="/" element={<Welcome />} />
+              <Route path="/grid" element={<CamGrid />} />
+              <Route path="/grid/:id" element={<Camera />} />
+              <Route path="/test" element={<Test />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
+          </>
         ):(
           <Signup { ...{login, setAuthed, setLogin } }/>
         )}

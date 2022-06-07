@@ -6,7 +6,8 @@ import { AppContext } from "./App"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVideoCamera, faForward } from '@fortawesome/free-solid-svg-icons';
 
-import { getCrime } from "../actions/crime";
+import { getCrime, setSafe } from "../actions/crime";
+import crime from "../reducers/crime";
 
 function Camera(props){
     // router
@@ -51,7 +52,10 @@ function Camera(props){
     const handleCameraClick = (e)=>{
         setIsSideMenu(false);
         navigate(`/grid/${e.target.dataset.cid}`)
+    }
 
+    const handleSetSafe = (e)=>{
+        dispatch(setSafe(id));
     }
 
     return (
@@ -62,10 +66,19 @@ function Camera(props){
                         <FontAwesomeIcon style={{transform: isSideMenu ? "rotate(180deg)" : "rotate(0deg)"}} icon={faForward} />
                     </div>
                     <ul>
-                        {cameraState.map(el=>
-                            <li key={el.id} className={el.id===Number(id)?"active":""} onClick={handleCameraClick} data-cid={el.id}>
+                        {cameraState.map(el=>{
+                            let setAlert = false;
+                            for(const crime of crimes){
+                                if(crime.camId == el.id && el.id != id){
+                                    setAlert = true;
+                                    break;
+                                }
+                            }
+                            return(
+                            <li key={el.id} className={(el.id===Number(id)?"active":"") + (setAlert ? "alert" : "")} onClick={handleCameraClick} data-cid={el.id}>
                                 Camera number {el.id}<FontAwesomeIcon style={{direction: "rtl"}} icon={faVideoCamera} />
                             </li>
+                            )}
                         )}
                     </ul>
                 </aside>
@@ -94,6 +107,9 @@ function Camera(props){
                         </div>
                     </footer>
                     <div className="controller">
+                        <button className="safe" onClick={handleSetSafe}>
+                            Mark as Safe
+                        </button>
                         <button>
                             Generate report
                         </button>
